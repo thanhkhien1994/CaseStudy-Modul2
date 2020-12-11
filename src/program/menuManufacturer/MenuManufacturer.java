@@ -1,7 +1,6 @@
 package program.menuManufacturer;
 
 import admin.Admin;
-import file.FileObjectStream;
 import program.menuMobile.MenuMobile;
 import program.menu.Check;
 import program.menu.ManageAdmin;
@@ -12,7 +11,6 @@ public class MenuManufacturer {
     Scanner scanner = new Scanner(System.in);
     Check check = new Check();
     MenuMobile menuMobile = new MenuMobile();
-    FileObjectStream file = new FileObjectStream();
 
 
     public void programManufacturer(int choiceDepot, ManageAdmin manageAdmin) throws Exception {
@@ -27,7 +25,6 @@ public class MenuManufacturer {
                 switch (choice.toUpperCase()) {
                     case "C":
                         manageAdmin.initManufacturer(choiceDepot);
-                        file.writeFileAdmin(manageAdmin);
                         continue;
                     case "E":
                         break;
@@ -36,32 +33,29 @@ public class MenuManufacturer {
                     case "Q":
                         return;
                     case "T":
+                        if (check.isCheckExitNow("Bạn muốn thoát không!")) {
+                            System.exit(0);
+                        }
                         break;
+                    default:
+                        System.out.println("Nhập không đúng!!!");
+
+                        continue;
                 }
             }
 
             if (check.isCheckNumber(choice)) {
                 choiceManufacturer = Integer.parseInt(choice) - 1;
-                int lengthMobile = admin.getDepotList().get(choiceDepot).getManufacturerList().size();
-                boolean isCheckChoiceManufacturer = false;
-
-                for (int iManufacture = 0; iManufacture < lengthMobile; iManufacture++) {
-                    if (choiceManufacturer == iManufacture) {
-                        isCheckChoiceManufacturer = true;
-                        break;
-                    }
-                }
-
+                int lengthMobile = admin.getDepotList().get(choiceDepot).getManufacturerList().get(choiceManufacturer).getMobileList().size();
+                boolean isCheckChoiceManufacturer = choiceManufacturer < lengthMobile;
                 if (isCheckChoiceManufacturer) {
                     boolean isCheckMobile = check.isCheckMobile(lengthMobile, choiceManufacturer, choiceDepot, manageAdmin);
                     if (isCheckMobile) {
-                        file.writeFileAdmin(manageAdmin);
                         menuMobile.programMobile(choiceManufacturer, choiceDepot, manageAdmin);
                     }
-                } else System.out.println("Không khớp nhập lại !!!");
+                } else System.out.println("Số to thế nhập lại !!!");
             }
         } while (true);
-
     }
 
     public void showMenuManufacturer(Admin admin, int iDepot) {
@@ -71,14 +65,10 @@ public class MenuManufacturer {
             for (int i = 0; i < admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getMobileList().size(); i++) {
                 sum++;
             }
-            System.out.println(
-                    (iManufacturer + 1) + ". Hãng " + admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getNameManufacturer()
-                            + "(" + sum + " thiết bị)"
-            );
+            System.out.println((iManufacturer + 1) + ". Hãng " + admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getNameManufacturer() + "(" + sum + ")");
             sum = 0;
         }
-        System.out.println("Chức năng cho hãng sản xuất: ");
-        System.out.println("\tC.Thêm\tE.Sửa\tD.Xóa\tQ.Quay lại\tThoát");
-        System.out.println("*------------------------------------------------------------------------------*");
+        System.out.println("Chức năng cho hãng sản xuất: \n\tC.Thêm\tE.Sửa\tD.Xóa\tQ.Quay lại\tThoát");
     }
 }
+

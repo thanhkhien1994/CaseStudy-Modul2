@@ -12,7 +12,6 @@ public class MenuDepot {
     MenuManufacturer menuManufacturer = new MenuManufacturer();
     Scanner scanner = new Scanner(System.in);
     Check check = new Check();
-    FileObjectStream file = new FileObjectStream();
 
 
     public void programDepot(ManageAdmin manageAdmin) throws Exception {
@@ -20,27 +19,37 @@ public class MenuDepot {
         String choice;
         int choiceDepot;
         do {
+            System.out.println("-------------------------------------------------------------------------------------------");
             showMenu(admin);
+            System.out.println("-------------------------------------------------------------------------------------------");
             choice = scanner.nextLine().toUpperCase();
             if (!check.isCheckNumber(choice)) {
                 switch (choice) {
                     case "C":/*Chức năng tạo mới kho đã xong*/
+                        System.out.println("-------------------------------------------------------------------------------------------");
                         manageAdmin.initDepot();
-                        file.writeFileAdmin(manageAdmin);
+                        System.out.println("-------------------------------------------------------------------------------------------");
                         continue;
                     case "E":
-
+                        System.out.println("-------------------------------------------------------------------------------------------");
+                        System.out.println("-------------------------------------------------------------------------------------------");
                         break;
                     case "D":
                         break;
                     case "Q":/*Chức năng quay lại đã xong*/
                         return;
                     case "T":/*Chức năng thoát đã xong*/
+                        System.out.println("-------------------------------------------------------------------------------------------");
                         if (check.isCheckExitNow("Bạn muốn thoát không")) {
                             System.exit(0);
                         }
+                        System.out.println("-------------------------------------------------------------------------------------------");
+                        break;
                     default:
+                        System.out.println("-------------------------------------------------------------------------------------------");
+                        System.out.println("===== Thông báo! =====");
                         System.out.println("Không khớp nhập lại!!!");
+                        System.out.println("-------------------------------------------------------------------------------------------");
                 }
             }
 
@@ -59,7 +68,6 @@ public class MenuDepot {
                 if (isCheckChoiceDepot) {
                     boolean isCheckManufacturer = check.isCheckManufacturer(choiceDepot, manageAdmin);
                     if (isCheckManufacturer) {
-                        file.writeFileAdmin(manageAdmin);
                         menuManufacturer.programManufacturer(choiceDepot, manageAdmin);
                     }
                 } else System.out.println("Không khớp nhập lại !!!");
@@ -70,19 +78,17 @@ public class MenuDepot {
 
     public void showMenu(Admin admin) {
         int sum = 0;
-        System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("Truy cập kho chứa: ");
         for (int i = 0; i < admin.getDepotList().size(); i++) {
             for (int j = 0; j < admin.getDepotList().get(i).getManufacturerList().size();j++){
                 sum ++;
             }
             System.out.println("\t" + (i + 1) + ". Kho " + admin.getDepotList().get(i).getNameDepot()
-                    +"("+sum+" nhãn hàng)"
+                    +"("+sum+")"
             );
             sum = 0;
         }
         System.out.println("Chức năng cho kho chứa: ");
         System.out.println("\tC.Thêm\tE.Sửa\tD.Xóa\tQ.Quay lại\tT.Thoát");
-        System.out.println("-------------------------------------------------------------------------------------------");
     }
 }

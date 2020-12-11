@@ -13,46 +13,55 @@ public class MenuAdmin {
     Scanner scanner = new Scanner(System.in);
     MenuDepot menuDepot = new MenuDepot();
     Check check = new Check();
-    FileObjectStream file = new FileObjectStream();
 
 
     public void programAdmin(ManageAdmin manageAdmin) throws Exception{
         Admin admin = manageAdmin.getAdmin();
         String choice;
         do {
+            System.out.println("-------------------------------------------------------------------------------------------");
             showMenuAdmin();
+            System.out.println("-------------------------------------------------------------------------------------------");
             choice = scanner.nextLine().toUpperCase();
             switch (choice) {
-                case "1":
+                case "1"://Kho
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     if (check.isCheckDepot(manageAdmin)){
-                        file.writeFileAdmin(manageAdmin);
                         menuDepot.programDepot(manageAdmin);
                     }
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     continue;
-                case "2":
+                case "2"://Tài sản
+                    System.out.println("-------------------------------------------------------------------------------------------");
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     break;
-                case "3":
+                case "3"://Tải khoản
+                    System.out.println("-------------------------------------------------------------------------------------------");
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     break;
                 case "Q":
                     return;
                 case "T":
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     if (check.isCheckExitNow("Bạn muốn thoát không")) {
                         System.exit(0);
-                    } else continue;
+                    }
+                    System.out.println("-------------------------------------------------------------------------------------------");
                 default:
+                    System.out.println("-------------------------------------------------------------------------------------------");
+                    System.out.println("===== Thông báo =====");
                     System.out.println("Nhập sai, nhập lại!!!");
+                    System.out.println("-------------------------------------------------------------------------------------------");
             }
         } while (true);
     }
 
     public void showMenuAdmin() {
-        System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("Lựa chọn");
-        System.out.println("      1.Kho");
-        System.out.println("      2.Tài sản");
-        System.out.println("      3.Tài khoản");
+        System.out.println("\t1.Kho");
+        System.out.println("\t2.Tài sản");
+        System.out.println("\t3.Tài khoản");
         System.out.println("Chức năng            ");
-        System.out.println("      Q.Quay lại \tT.Thoát");
-        System.out.println("-------------------------------------------------------------------------------------------");
+        System.out.println("\tQ.Quay lại \tT.Thoát");
     }
 }

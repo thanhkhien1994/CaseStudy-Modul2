@@ -11,23 +11,19 @@ import java.util.Scanner;
 public class MenuLogin {
     Scanner scanner = new Scanner(System.in);
     MenuAdmin menuAdmin = new MenuAdmin();
-    ManageAdmin manageAdmin;
+    ManageAdmin manageAdmin = new ManageAdmin();
     Admin admin;
     Check check = new Check();
-    FileObjectStream file = new FileObjectStream();
 
     public void program() throws Exception {
-        if (manageAdmin == null){
-            manageAdmin = new ManageAdmin();
-            file.writeFileAdmin(manageAdmin);
-        }
+
         String choice;
         do {
             menu();
             choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     if (manageAdmin.getAdmin() == null) {
                         System.out.println("Nhập tên login mới");
                         String name = scanner.nextLine();
@@ -36,19 +32,23 @@ public class MenuLogin {
                         scanner.nextLine();
                         manageAdmin.setAdmin(new Admin(name, pin));
                         System.out.println("Đã tạo mới tài khoản.");
-                        file.writeFileAdmin(manageAdmin);
+                        admin = manageAdmin.getAdmin();
                     }
-                    manageAdmin = file.readFileAdmin();
-                    admin = manageAdmin.getAdmin();
                     boolean isCheckLogin = check.isCheckLogin(admin);
-
                     if (isCheckLogin) {
                         menuAdmin.programAdmin(manageAdmin);
                     }
-                    continue;
+                    System.out.println("-------------------------------------------------------------------------------------------");
+                    break;
                 case "2":
+                    System.out.println("Tiểu thuơng đang cập nhật");
                     break;
                 case "3":
+                    System.out.println("-------------------------------------------------------------------------------------------");
+                    if (check.isCheckExitNow("Xác nhận thoát!")){
+                        System.exit(0);
+                    }
+                    System.out.println("-------------------------------------------------------------------------------------------");
                     break;
                 default:
                     break;

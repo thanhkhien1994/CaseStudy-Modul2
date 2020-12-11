@@ -1,9 +1,10 @@
 package admin;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Admin {
+public class Admin implements Serializable {
     static int stt;
     private String name;
     private int pin;
