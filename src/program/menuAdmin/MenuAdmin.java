@@ -19,39 +19,25 @@ public class MenuAdmin {
         Admin admin = manageAdmin.getAdmin();
         String choice;
         do {
-            System.out.println("-------------------------------------------------------------------------------------------");
             showMenuAdmin();
-            System.out.println("-------------------------------------------------------------------------------------------");
             choice = scanner.nextLine().toUpperCase();
             switch (choice) {
                 case "1"://Kho
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     if (check.isCheckDepot(manageAdmin)){
                         menuDepot.programDepot(manageAdmin);
                     }
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     continue;
                 case "2"://Tài sản
-                    System.out.println("-------------------------------------------------------------------------------------------");
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     break;
                 case "3"://Tải khoản
-                    System.out.println("-------------------------------------------------------------------------------------------");
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     break;
                 case "Q":
                     return;
                 case "T":
-                    System.out.println("-------------------------------------------------------------------------------------------");
-                    if (check.isCheckExitNow("Bạn muốn thoát không")) {
-                        System.exit(0);
-                    }
-                    System.out.println("-------------------------------------------------------------------------------------------");
+                    if (check.isCheckExitNow("Bạn muốn thoát không")) System.exit(0);
                 default:
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     System.out.println("===== Thông báo =====");
                     System.out.println("Nhập sai, nhập lại!!!");
-                    System.out.println("-------------------------------------------------------------------------------------------");
             }
         } while (true);
     }

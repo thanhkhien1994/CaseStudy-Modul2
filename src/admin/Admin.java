@@ -6,10 +6,14 @@ import java.util.List;
 
 public class Admin implements Serializable {
     static int stt;
-    private String name;
-    private int pin;
+    private String name = "admin";
+    private int pin = 1111;
     private int id;
     List<Depot> depotList;
+
+    public Admin() {
+        depotList = new LinkedList<>();
+    }
 
     public Admin(String name, int pin) {
         depotList = new LinkedList<>();

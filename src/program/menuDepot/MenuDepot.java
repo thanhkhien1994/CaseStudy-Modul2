@@ -19,37 +19,27 @@ public class MenuDepot {
         String choice;
         int choiceDepot;
         do {
-            System.out.println("-------------------------------------------------------------------------------------------");
             showMenu(admin);
-            System.out.println("-------------------------------------------------------------------------------------------");
             choice = scanner.nextLine().toUpperCase();
             if (!check.isCheckNumber(choice)) {
                 switch (choice) {
                     case "C":/*Chức năng tạo mới kho đã xong*/
-                        System.out.println("-------------------------------------------------------------------------------------------");
                         manageAdmin.initDepot();
-                        System.out.println("-------------------------------------------------------------------------------------------");
                         continue;
                     case "E":
-                        System.out.println("-------------------------------------------------------------------------------------------");
-                        System.out.println("-------------------------------------------------------------------------------------------");
                         break;
                     case "D":
                         break;
                     case "Q":/*Chức năng quay lại đã xong*/
                         return;
                     case "T":/*Chức năng thoát đã xong*/
-                        System.out.println("-------------------------------------------------------------------------------------------");
                         if (check.isCheckExitNow("Bạn muốn thoát không")) {
                             System.exit(0);
                         }
-                        System.out.println("-------------------------------------------------------------------------------------------");
                         break;
                     default:
-                        System.out.println("-------------------------------------------------------------------------------------------");
                         System.out.println("===== Thông báo! =====");
                         System.out.println("Không khớp nhập lại!!!");
-                        System.out.println("-------------------------------------------------------------------------------------------");
                 }
             }
 

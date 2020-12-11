@@ -47,13 +47,11 @@ public class MenuManufacturer {
             if (check.isCheckNumber(choice)) {
                 choiceManufacturer = Integer.parseInt(choice) - 1;
                 int lengthMobile = admin.getDepotList().get(choiceDepot).getManufacturerList().get(choiceManufacturer).getMobileList().size();
-                boolean isCheckChoiceManufacturer = choiceManufacturer < lengthMobile;
-                if (isCheckChoiceManufacturer) {
-                    boolean isCheckMobile = check.isCheckMobile(lengthMobile, choiceManufacturer, choiceDepot, manageAdmin);
-                    if (isCheckMobile) {
-                        menuMobile.programMobile(choiceManufacturer, choiceDepot, manageAdmin);
-                    }
-                } else System.out.println("Số to thế nhập lại !!!");
+                boolean isCheckMobile = check.isCheckMobile(lengthMobile, choiceManufacturer, choiceDepot, manageAdmin);
+                if (isCheckMobile) {
+                    menuMobile.programMobile(choiceManufacturer, choiceDepot, manageAdmin);
+                }
+
             }
         } while (true);
     }

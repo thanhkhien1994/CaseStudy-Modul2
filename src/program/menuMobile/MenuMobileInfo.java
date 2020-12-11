@@ -13,16 +13,22 @@ public class MenuMobileInfo {
 
     public void program(int choiceMobile, int iDepot, int iManufacture, ManageAdmin manageAdmin) {
         Admin admin = manageAdmin.getAdmin();
+        int lengthProduct;
         do {
             showsInfo(admin, iDepot, iManufacture, choiceMobile);
             String choice = scanner.nextLine().toUpperCase();
+            lengthProduct = admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacture).getMobileList().size();
 
             switch (choice) {
                 case "E":
-                    ProgramEdit(iDepot, iManufacture, choiceMobile, admin);
+                    if (lengthProduct>0){
+                        ProgramEdit(iDepot, iManufacture, choiceMobile, admin);
+                    }else System.out.println("===== Thông báo =====\nSản phẩm không còn để sửa !");
                     return;
                 case "D":
-                    delete(iDepot, iManufacture, choiceMobile, admin);
+                    if (lengthProduct>0){
+                        delete(iDepot, iManufacture, choiceMobile, admin);
+                    }else System.out.println("===== Thông báo  =====\nSản phẩm không còn để xóa !");
                     break;
                 case "Q":
                     return;
@@ -31,9 +37,15 @@ public class MenuMobileInfo {
                         System.exit(0);
                     }
                     break;
+                default:
+                    System.out.println("=====  Thông báo  =====\n Nhập sai !!!\nNhập lại");
+                    if (check.isCheckExitNow("Bạn có muốn tiếp tục không")){
+                        break;
+                    }else return;
             }
 
         } while (true);
+
 
     }
 

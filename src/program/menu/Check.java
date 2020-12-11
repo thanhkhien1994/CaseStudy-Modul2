@@ -21,7 +21,7 @@ public class Check {
         if (!isCheckNumber(mess)){
             do {
                 System.out.println("=====  Thông báo  =====");
-                System.out.println(mess + ":\tC\\K");
+                System.out.println(mess + ":\t[C\\K]");
                 String choice = scanner.nextLine().toUpperCase();
                 boolean isContinue = choice.equals("C");
                 boolean isExitNow = choice.equals("K");
@@ -37,7 +37,6 @@ public class Check {
 
     public boolean isCheckLogin(Admin admin) {
         do {
-            System.out.println("-------------------------------------------------------------------------------------------");
             System.out.println("===== Đăng nhập =====");
             System.out.print("Tên đăng nhập: ");
             String userName = scanner.nextLine().toUpperCase();
@@ -60,7 +59,6 @@ public class Check {
             if (isUser && !isPassword) {
                 System.out.println("Sai mật khẩu ! ");
                 if (isCheckExitNow("Nhập lại")) {
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     continue;
                 } else return false;
             }
@@ -68,7 +66,6 @@ public class Check {
             if (isPassword && !isUser) {
                 System.out.println("Sai tên đăng nhập ! ");
                 if (isCheckExitNow("Tiếp tục")) {
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     continue;
                 } else return false;
             }
@@ -76,13 +73,11 @@ public class Check {
             if (!isPassword && !isUser) {
                 System.out.println("Sai tên đăng nhập và mật khẩu");
                 if (isCheckExitNow("Nhập lại")) {
-                    System.out.println("-------------------------------------------------------------------------------------------");
                     continue;
                 } else return false;
             }
 
             if (isPassword) {
-                System.out.println("-------------------------------------------------------------------------------------------");
                 return true;
             }
         } while (true);
@@ -92,10 +87,8 @@ public class Check {
     public boolean isCheckDepot(ManageAdmin manageAdmin) {
         int lengthDepotList = manageAdmin.getAdmin().getDepotList().size();
         if (lengthDepotList == 0) {
-            System.out.println("-------------------------------------------------------------------------------------------");
             if (isCheckExitNow("Bạn chưa có kho chưa nào\nTạo ngay")) {
                 manageAdmin.initDepot();
-                System.out.println("-------------------------------------------------------------------------------------------");
                 return true;
             }else return false;
         }else return true;
@@ -104,10 +97,8 @@ public class Check {
     public boolean isCheckManufacturer(int choiceDepot, ManageAdmin manageAdmin){
         int lengthListDepot = manageAdmin.getAdmin().getDepotList().get(choiceDepot).getManufacturerList().size();
         if (lengthListDepot == 0) {
-            System.out.println("-------------------------------------------------------------------------------------------");
             if (isCheckExitNow(" Kho bạn đang trống\n* Thêm nhãn hàng ngay")) {
                 manageAdmin.initManufacturer(choiceDepot);
-                System.out.println("-------------------------------------------------------------------------------------------");
                 return true;
             }else return false;
         }else return true;
@@ -115,10 +106,8 @@ public class Check {
 
     public boolean isCheckMobile(int LengthMobileList, int choiceManufacturer, int iDepot, ManageAdmin manageAdmin){
         if (LengthMobileList == 0) {
-            System.out.println("-------------------------------------------------------------------------------------------");
             if (isCheckExitNow("Bạn chưa có sản phẩm nào cả\n Thêm ngay")) {
                 manageAdmin.initMobile(choiceManufacturer, iDepot);
-                System.out.println("-------------------------------------------------------------------------------------------");
                 return true;
             }else return false;
         }return true;

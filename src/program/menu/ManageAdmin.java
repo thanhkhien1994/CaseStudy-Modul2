@@ -10,73 +10,73 @@ import java.util.Scanner;
 public class ManageAdmin {
     Scanner scanner = new Scanner(System.in);
     Check check = new Check();
-    Admin admin;
+    Admin admin = new Admin();
 
     public void initManufacturer(int iDepot) {
-        System.out.print("Nhập vào tên hãng: ");
+        System.out.print("Nhập vào tên hãng sản xuất thiết bị: ");
         String nameManufacturer = scanner.nextLine().toUpperCase();
         Manufacturer manufacturer = new Manufacturer(nameManufacturer);
         admin.getDepotList().get(iDepot).getManufacturerList().add(manufacturer);
     }
 
     public void initMobile(int iManufacturer, int iDepot) {
-        System.out.println("Nhập vào tên điện thoại");
+        System.out.println("Nhập vào tên thiết bị: ");
         String nameMobile = scanner.nextLine();
         String ime;
         int imeNumber;
         do {
-            System.out.println("Nhập vào số IME điện thoại");
+            System.out.println("Nhập vào số IME thiết bị: ");
             ime = scanner.nextLine();
-            if (check.isCheckNumber(ime)){
+            if (check.isCheckNumber(ime)) {
                 imeNumber = Integer.parseInt(ime);
                 break;
-            }else {
-                System.out.println("Thông báo");
-                System.out.println("Bạn phải nhập số, nhập lại");
-                if (check.isCheckExitNow("Bạn có muốn tiếp tục không")){
+            } else {
+                System.out.println("===== Thông báo =====");
+                System.out.println("Bạn phải nhập số, nhập lại!!!");
+                if (check.isCheckExitNow("Bạn có muốn tiếp tục không")) {
                     System.out.println("Nhập lại: ");
-                }else  return;
+                } else return;
             }
-        }while (true);
+        } while (true);
 
         double price;
+        String priceStr;
         do {
-            try {
-                System.out.println("Nhập vào số tiền: ");
-                price = scanner.nextDouble();
-                scanner.nextLine();
+            System.out.println("Nhập vào số tiền: ");
+            priceStr = scanner.nextLine();
+            if (check.isCheckNumber(priceStr)) {
+                price = Integer.parseInt(priceStr);
                 break;
-            }catch (Exception e){
+            } else {
                 System.out.println("===== Thông báo =====");
                 System.out.println("Nhập không đúng!");
-                if (check.isCheckExitNow("Bạn có muốn tiếp tục")){
+                if (check.isCheckExitNow("Bạn có muốn tiếp tục")) {
                     System.out.println("Nhập lại: ");
-                }else return;
+                } else return;
             }
-        }while (true);
+        } while (true);
 
         String amountPhone;
         int newAmountPhone;
         do {
-            System.out.println("Nhập vào số lượng điện thoại");
+            System.out.println("Nhập vào số lượng thiết bị");
             amountPhone = scanner.nextLine();
             if (check.isCheckNumber(amountPhone)) {
                 newAmountPhone = Integer.parseInt(amountPhone);
                 break;
             } else {
-                System.out.println("Số luợng điện thoại không hợp lệ !");
+                System.out.println("Số luợng Thiết bị không hợp lệ !");
                 if (check.isCheckExitNow("Bạn có muốn tiếp tục không???")) {
-                    System.out.println("Nhập lại số lựong điện thoại");
+                    System.out.println("=====  Thông báo  =====\nNhập lại: ");
                 } else return;
             }
 
         } while (true);
 
-        System.out.println("Chọn kiểu (Loại) thiết bị");
+        System.out.println("=====  Chọn kiểu (Loại) thiết bị  =====");
         String choice;
         int newChoice;
         do {
-            System.out.println("--------------------------------------------------------------------------------------");
             System.out.println("1. Điện thoại di dộng");
             System.out.println("2. Máy tính sách tay");
             System.out.println("3. Máy ảnh");
@@ -84,8 +84,7 @@ public class ManageAdmin {
             System.out.println("5. Phụ kiện");
             choice = scanner.nextLine();
             if (check.isCheckNumber(choice)) {
-                newChoice = Integer.parseInt(choice);
-                Mobile mobile;
+                newChoice = Integer.parseInt(choice);Mobile mobile;
                 switch (newChoice) {
                     case 1:
                         mobile = new Mobile("Điện thoại di động", nameMobile, imeNumber, price, newAmountPhone);
@@ -117,19 +116,18 @@ public class ManageAdmin {
 
             } else {
                 System.out.println("=====  Thông báo  =====");
-                System.out.println("Nhập không đúng");
+                System.out.println("Nhập không đúng !!!");
                 if (check.isCheckExitNow("Bạn có muốn tiếp tục không")) {
                     System.out.println("Nhập số hiển thị trên màn hình.");
-                    System.out.println("--------------------------------------------------------------------------------------");
                 } else return;
             }
         } while (true);
     }
 
     public void initDepot() {
-        System.out.print("Nhập vào tên kho\n");
+        System.out.print("Nhập vào tên cửa hàng bạn quản lý\n");
         String nameDepot = scanner.nextLine().toUpperCase();
-        System.out.print("Nhập vào địa chỉ kho\n");
+        System.out.print("Nhập vào địa chỉ cửa hàng\n");
         String address = scanner.nextLine();
         Depot depot = new Depot(nameDepot, address);
         admin.getDepotList().add(depot);

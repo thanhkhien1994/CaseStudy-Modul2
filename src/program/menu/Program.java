@@ -9,7 +9,7 @@ public class Program {
             try{
                 menu.program();
             }catch (Exception e){
-                System.out.println("Lỗi chưa xác định, thử lại");
+                System.out.println(e);
             }
         }while (true);
     }
