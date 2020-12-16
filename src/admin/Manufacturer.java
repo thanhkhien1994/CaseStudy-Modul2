@@ -1,9 +1,10 @@
 package admin;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Manufacturer {
+public class Manufacturer implements Serializable {
     static int stt;
     private int id;
     private String nameManufacturer;

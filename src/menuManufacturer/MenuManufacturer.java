@@ -1,9 +1,10 @@
-package program.menuManufacturer;
+package menuManufacturer;
 
 import admin.Admin;
-import program.menuMobile.MenuMobile;
-import program.menu.Check;
-import program.menu.ManageAdmin;
+import file.FileAdmin;
+import menuMobile.MenuMobile;
+import menu.Check;
+import menu.ManageAdmin;
 
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class MenuManufacturer {
     Scanner scanner = new Scanner(System.in);
     Check check = new Check();
     MenuMobile menuMobile = new MenuMobile();
-
+    FileAdmin fileAdmin = new FileAdmin();
 
     public void programManufacturer(int choiceDepot, ManageAdmin manageAdmin) throws Exception {
         Admin admin = manageAdmin.getAdmin();
@@ -25,10 +26,15 @@ public class MenuManufacturer {
                 switch (choice.toUpperCase()) {
                     case "C":
                         manageAdmin.initManufacturer(choiceDepot);
+                        fileAdmin.writeFileAdmin(admin);
                         continue;
                     case "E":
+                        manageAdmin.editManufacturer(admin, choiceDepot);
+                        fileAdmin.writeFileAdmin(admin);
                         break;
                     case "D":
+                        manageAdmin.deleteManufacturer(admin, choiceDepot);
+                        fileAdmin.writeFileAdmin(admin);
                         break;
                     case "Q":
                         return;
@@ -38,7 +44,7 @@ public class MenuManufacturer {
                         }
                         break;
                     default:
-                        System.out.println("Nhập không đúng!!!");
+                        System.out.println("=====  Thông báo  =====\n\tNhập không đúng!!!");
 
                         continue;
                 }
@@ -46,12 +52,13 @@ public class MenuManufacturer {
 
             if (check.isCheckNumber(choice)) {
                 choiceManufacturer = Integer.parseInt(choice) - 1;
-                int lengthMobile = admin.getDepotList().get(choiceDepot).getManufacturerList().get(choiceManufacturer).getMobileList().size();
-                boolean isCheckMobile = check.isCheckMobile(lengthMobile, choiceManufacturer, choiceDepot, manageAdmin);
-                if (isCheckMobile) {
-                    menuMobile.programMobile(choiceManufacturer, choiceDepot, manageAdmin);
-                }
+                if (check.isChoiceManufacturer(admin, choiceDepot, choiceManufacturer)) {
+                    int lengthMobile = admin.getDepotList().get(choiceDepot).getManufacturerList().get(choiceManufacturer).getMobileList().size();
+                    if (check.isCheckMobile(lengthMobile, choiceManufacturer, choiceDepot, manageAdmin)) {
 
+                        menuMobile.programMobile(choiceManufacturer, choiceDepot, manageAdmin);
+                    }
+                } else System.out.println("=====Thông báo=====\n\tChọn sai!!!");
             }
         } while (true);
     }
@@ -59,14 +66,15 @@ public class MenuManufacturer {
     public void showMenuManufacturer(Admin admin, int iDepot) {
         int sum = 0;
         int lengthManufacturerList = admin.getDepotList().get(iDepot).getManufacturerList().size();
+        System.out.println("-->>Lựa chọn: ");
         for (int iManufacturer = 0; iManufacturer < lengthManufacturerList; iManufacturer++) {
             for (int i = 0; i < admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getMobileList().size(); i++) {
                 sum++;
             }
-            System.out.println((iManufacturer + 1) + ". Hãng " + admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getNameManufacturer() + "(" + sum + ")");
+            System.out.println("\t" + (iManufacturer + 1) + ". Hãng " + admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getNameManufacturer() + "(" + sum + ")");
             sum = 0;
         }
-        System.out.println("Chức năng cho hãng sản xuất: \n\tC.Thêm\tE.Sửa\tD.Xóa\tQ.Quay lại\tThoát");
+        System.out.println("-->>Chức năng: \n\tC.Thêm\tE.Sửa\tD.Xóa\tQ.Quay lại\tThoát");
     }
 }
 

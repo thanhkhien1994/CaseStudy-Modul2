@@ -1,10 +1,10 @@
-package program.menuDepot;
+package menuDepot;
 
 import admin.Admin;
-import file.FileObjectStream;
-import program.menuManufacturer.MenuManufacturer;
-import program.menu.Check;
-import program.menu.ManageAdmin;
+import file.FileAdmin;
+import menuManufacturer.MenuManufacturer;
+import menu.Check;
+import menu.ManageAdmin;
 
 import java.util.Scanner;
 
@@ -12,7 +12,7 @@ public class MenuDepot {
     MenuManufacturer menuManufacturer = new MenuManufacturer();
     Scanner scanner = new Scanner(System.in);
     Check check = new Check();
-
+    FileAdmin fileAdmin = new FileAdmin();
 
     public void programDepot(ManageAdmin manageAdmin) throws Exception {
         Admin admin = manageAdmin.getAdmin();
@@ -23,62 +23,54 @@ public class MenuDepot {
             choice = scanner.nextLine().toUpperCase();
             if (!check.isCheckNumber(choice)) {
                 switch (choice) {
-                    case "C":/*Chức năng tạo mới kho đã xong*/
+                    case "C":
                         manageAdmin.initDepot();
+                        fileAdmin.writeFileAdmin(admin);
                         continue;
                     case "E":
+                        manageAdmin.editDepot(admin);
+                        fileAdmin.writeFileAdmin(admin);
                         break;
                     case "D":
+                        manageAdmin.deleteDepot(admin);
+                        fileAdmin.writeFileAdmin(admin);
                         break;
-                    case "Q":/*Chức năng quay lại đã xong*/
+                    case "Q":
                         return;
-                    case "T":/*Chức năng thoát đã xong*/
+                    case "T":
                         if (check.isCheckExitNow("Bạn muốn thoát không")) {
                             System.exit(0);
                         }
                         break;
                     default:
                         System.out.println("===== Thông báo! =====");
-                        System.out.println("Không khớp nhập lại!!!");
+                        System.out.println("\tKhông khớp nhập lại!!!");
                 }
             }
 
             if (check.isCheckNumber(choice)) {
                 choiceDepot = Integer.parseInt(choice) - 1;
-                int lengthDepotList = admin.getDepotList().size();
-                boolean isCheckChoiceDepot = false;
-
-                for (int iDepot = 0; iDepot < lengthDepotList; iDepot++) {
-                    if (iDepot == choiceDepot) {
-                        isCheckChoiceDepot = true;
-                        break;
-                    }
-                }
-
-                if (isCheckChoiceDepot) {
+                if (check.isChoiceDepot(admin, choiceDepot)) {
                     boolean isCheckManufacturer = check.isCheckManufacturer(choiceDepot, manageAdmin);
                     if (isCheckManufacturer) {
                         menuManufacturer.programManufacturer(choiceDepot, manageAdmin);
                     }
                 } else System.out.println("Không khớp nhập lại !!!");
             }
-
         } while (true);
     }
 
-    public void showMenu(Admin admin) {
-        int sum = 0;
-        System.out.println("Truy cập kho chứa: ");
+    private void showMenu(Admin admin) {
+        int amount = 0;
+        System.out.println("-->>Cửa hàng: ");
         for (int i = 0; i < admin.getDepotList().size(); i++) {
             for (int j = 0; j < admin.getDepotList().get(i).getManufacturerList().size();j++){
-                sum ++;
+                amount ++;
             }
-            System.out.println("\t" + (i + 1) + ". Kho " + admin.getDepotList().get(i).getNameDepot()
-                    +"("+sum+")"
-            );
-            sum = 0;
+            System.out.println("\t" + (i + 1) + ". Cửa hàng " + admin.getDepotList().get(i).getNameDepot() +"("+amount+")");
+            amount = 0;
         }
-        System.out.println("Chức năng cho kho chứa: ");
+        System.out.println("-->>Chức năng: ");
         System.out.println("\tC.Thêm\tE.Sửa\tD.Xóa\tQ.Quay lại\tT.Thoát");
     }
 }

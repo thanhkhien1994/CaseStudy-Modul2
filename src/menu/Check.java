@@ -1,8 +1,8 @@
-package program.menu;
+package menu;
 
 import admin.Admin;
-import program.menuManufacturer.MenuManufacturer;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Check {
@@ -18,7 +18,7 @@ public class Check {
     }
 
     public boolean isCheckExitNow(String mess) {
-        if (!isCheckNumber(mess)){
+        if (!isCheckNumber(mess)) {
             do {
                 System.out.println("=====  Thông báo  =====");
                 System.out.println(mess + ":\t[C\\K]");
@@ -29,7 +29,7 @@ public class Check {
                 if (isExitNow) return false;
                 System.out.println("Cảnh báo nhập sai!");
             } while (true);
-        }else{
+        } else {
             System.out.println("Nhập không đúng !!!");
             return false;
         }
@@ -46,12 +46,12 @@ public class Check {
             do {
                 password = scanner.nextLine();
                 if (isCheckNumber(password)) {
-                  intPassword = Integer.parseInt(password);
-                  break;
+                    intPassword = Integer.parseInt(password);
+                    break;
                 }
                 System.out.println("Nhập sai, mã pin chỉ bao gồm số ");
                 System.out.println("Nhập lại mã pin:");
-            }while (true);
+            } while (true);
 
             boolean isUser = userName.equals(admin.getName().toUpperCase());
             boolean isPassword = (intPassword == admin.getPin());
@@ -84,32 +84,49 @@ public class Check {
 
     }
 
-    public boolean isCheckDepot(ManageAdmin manageAdmin) {
+    public boolean isCheckDepot(ManageAdmin manageAdmin) throws IOException {
         int lengthDepotList = manageAdmin.getAdmin().getDepotList().size();
         if (lengthDepotList == 0) {
             if (isCheckExitNow("Bạn chưa có kho chưa nào\nTạo ngay")) {
                 manageAdmin.initDepot();
                 return true;
-            }else return false;
-        }else return true;
+            } else return false;
+        } else return true;
     }
 
-    public boolean isCheckManufacturer(int choiceDepot, ManageAdmin manageAdmin){
+    public boolean isCheckManufacturer(int choiceDepot, ManageAdmin manageAdmin) throws IOException {
         int lengthListDepot = manageAdmin.getAdmin().getDepotList().get(choiceDepot).getManufacturerList().size();
         if (lengthListDepot == 0) {
             if (isCheckExitNow(" Kho bạn đang trống\n* Thêm nhãn hàng ngay")) {
                 manageAdmin.initManufacturer(choiceDepot);
                 return true;
-            }else return false;
-        }else return true;
+            } else return false;
+        } else return true;
     }
 
-    public boolean isCheckMobile(int LengthMobileList, int choiceManufacturer, int iDepot, ManageAdmin manageAdmin){
+    public boolean isCheckMobile(int LengthMobileList, int choiceManufacturer, int iDepot, ManageAdmin manageAdmin) throws IOException {
         if (LengthMobileList == 0) {
             if (isCheckExitNow("Bạn chưa có sản phẩm nào cả\n Thêm ngay")) {
                 manageAdmin.initMobile(choiceManufacturer, iDepot);
                 return true;
-            }else return false;
-        }return true;
+            } else return false;
+        }
+        return true;
+    }
+
+    public boolean isChoiceDepot(Admin admin, int choice) {
+        if (choice >= 0 && choice < admin.getDepotList().size()) {
+            return true;
+        } else return false;
+    }
+    public boolean isChoiceManufacturer(Admin admin,int iDepot, int choice) {
+        if (choice >= 0 && choice < admin.getDepotList().get(iDepot).getManufacturerList().size()) {
+            return true;
+        } else return false;
+    }
+    public boolean isChoiceMobile(Admin admin, int iDepot, int iManufacturer, int choice) {
+        if (choice >= 0 && choice < admin.getDepotList().get(iDepot).getManufacturerList().get(iManufacturer).getMobileList().size()) {
+            return true;
+        } else return false;
     }
 }

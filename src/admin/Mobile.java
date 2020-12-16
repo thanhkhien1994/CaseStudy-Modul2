@@ -1,6 +1,8 @@
 package admin;
 
-public class Mobile {
+import java.io.Serializable;
+
+public class Mobile implements Serializable {
     static int stt;
     private int id;
     private String mobileStyle;
